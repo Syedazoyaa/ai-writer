@@ -30,7 +30,7 @@ def set_background_image(image_path):
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Set background image
-set_background_image("bnabg.png")
+set_background_image("BABG.png")
 
 # Function to generate content using Gemini Pro model
 def get_gemini_response(content_type, user_input):

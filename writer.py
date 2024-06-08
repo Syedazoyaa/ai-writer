@@ -1,10 +1,11 @@
+   
 
 import streamlit as st
 import base64
 import google.generativeai as genai
 
 # Configure the Google Generative AI with your API key
-genai.configure(api_key="AIzaSyDl2nIaYT9ef8vJ6NDhXnIOUj-Z_UmYfXU")   
+genai.configure(api_key="AIzaSyDl2nIaYT9ef8vJ6NDhXnIOUj-Z_UmYfXU")  
 
 # Set Streamlit app page configuration (must be first Streamlit command)
 st.set_page_config(page_title="Writer.AI", layout="wide")
@@ -15,22 +16,31 @@ chat = model.start_chat(history=[])
 
 # Function to set background image using base64 encoding
 def set_background_image(image_path):
-    with open(image_path, "rb") as image_file:
-        encoded_image = base64.b64encode(image_file.read()).decode()
-    page_bg_img = f'''
-    <style>
-    .stApp {{
-        background-image: url("data:image/png;base64,{encoded_image}");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }}
-    </style>
-    '''
-    st.markdown(page_bg_img, unsafe_allow_html=True)
+    try:
+        with open(image_path, "rb") as image_file:
+            encoded_image = base64.b64encode(image_file.read()).decode()
+        page_bg_img = f'''
+        <style>
+        .stApp {{
+            background-image: url("data:image/png;base64,{encoded_image}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        </style>
+        '''
+        st.markdown(page_bg_img, unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.error(f"Error: Image file '{image_path}' not found.")
+    except Exception as e:
+        st.error(f"Error: {e}")
 
-# Set background image
-set_background_image("BABG.png")
+# Get the absolute path to the current directory
+current_dir = os.path.dirname(__file__)
+
+# Set background image (assuming "BABG.png" is in the same directory)
+image_path = os.path.join(current_dir, "BABG.png")
+set_background_image(image_path)
 
 # Function to generate content using Gemini Pro model
 def get_gemini_response(content_type, user_input):

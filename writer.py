@@ -31,6 +31,15 @@ set_background_image("bnabg.png")
 # Streamlit app layout
 st.set_page_config(page_title="Writer.AI", layout="wide")
 
+# Function to generate content using Gemini Pro model
+def get_gemini_response(content_type, user_input):
+    try:
+        question = f"Generate a {content_type} on: {user_input} make it very evident that it's a {content_type} and also give the heading as 'BLOG ON {user_input}'"
+        response = chat.send_message(question, stream=True)
+        return response
+    except Exception as e:
+        st.error(f"Error: {e}")
+
 # Main content
 st.title("Writer.AI")
 st.header("Generate Blog or Article")

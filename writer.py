@@ -1,9 +1,13 @@
+
 import streamlit as st
 import base64
 import google.generativeai as genai
 
 # Configure the Google Generative AI with your API key
-genai.configure(api_key="AIzaSyDl2nIaYT9ef8vJ6NDhXnIOUj-Z_UmYfXU")  
+genai.configure(api_key="AIzaSyDl2nIaYT9ef8vJ6NDhXnIOUj-Z_UmYfXU")   
+
+# Set Streamlit app page configuration (must be first Streamlit command)
+st.set_page_config(page_title="Writer.AI", layout="wide")
 
 # Function to load the Gemini Pro model and get responses
 model = genai.GenerativeModel("gemini-1.0-pro")
@@ -27,9 +31,6 @@ def set_background_image(image_path):
 
 # Set background image
 set_background_image("bnabg.png")
-
-# Streamlit app layout
-st.set_page_config(page_title="Writer.AI", layout="wide")
 
 # Function to generate content using Gemini Pro model
 def get_gemini_response(content_type, user_input):
